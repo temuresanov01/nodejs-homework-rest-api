@@ -1,41 +1,19 @@
 const express = require('express')
-const contactsModel = require('../../models/contacts')
-const {schemaCreateContact} = require('../validation')
-const {validation} = require('../../middlewares/validation')
+const {schemaCreateContact, schemaMongoId, schemaFavoriteContact} = require('../validation')
+const {validation, validationParams, validationFavorite} = require('../../middlewares/validation')
 const router = express.Router()
+const {listContacts, getContactById, addContact, removeContact, updateContact, updateStatusContact}  = require('../../controllers/index')
 
-router.get('/', async (req, res, next) => {
-  const contacts = await contactsModel.listContacts()
-  res.json({ status: 'success', code: 200, payload: {contacts} })
-})
+router.get('/', listContacts )
 
-router.get('/:contactId', async (req, res, next) => {
-   const contacts = await contactsModel.getContactById(req.params.contactId)
-   if (contacts) {
-     return res.json({ status: 'success', code: 200, payload: {contacts} })
-   }
-   return res.status(404).json({status: 'error', code: 404, message: 'Not Faund'})
-})
+router.get('/:contactId', validationParams(schemaMongoId), getContactById)
 
-router.post('/', validation(schemaCreateContact), async (req, res, next) => {
-  const contacts = await contactsModel.addContact(req.body)
-  res.status(201).json({ status: 'success', code: 201, payload: {contacts} })
-})
+router.post('/', validation(schemaCreateContact), addContact)
 
-router.delete('/:contactId', async (req, res, next) => {
-  const contacts = await contactsModel.removeContact(req.params.contactId)
-   if (contacts) {
-     return res.json({ status: 'success', code: 200, message: 'contact deleted', payload: {contacts} })
-   }
-   return res.status(404).json({status: 'error', code: 404, message: 'Not found'})
-})
+router.delete('/:contactId', validationParams(schemaMongoId), removeContact)
 
-router.put('/:contactId', validation(schemaCreateContact), async (req, res, next) => {
-   const contacts = await contactsModel.updateContact(req.params.contactId, req.body)
-   if (contacts) {
-     return res.json({ status: 'success', code: 200, payload: {contacts} })
-   }
-   return res.status(404).json({status: 'error', code: 404, message: 'Not found'})
-})
+router.put('/:contactId', validationParams(schemaMongoId), validation(schemaCreateContact), updateContact)
+
+router.patch('/:contactId/favorite', validationParams(schemaMongoId), validationFavorite(schemaFavoriteContact), updateStatusContact)
 
 module.exports = router
