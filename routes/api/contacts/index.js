@@ -1,8 +1,8 @@
 const express = require('express')
-const {schemaCreateContact, schemaMongoId, schemaFavoriteContact} = require('../validation')
-const {validation, validationParams, validationFavorite} = require('../../middlewares/validation')
+const {schemaCreateContact, schemaMongoId, schemaFavoriteContact} = require('./validation')
+const {validation, validationParams, validationFavorite} = require('../../../middlewares/validation')
 const router = express.Router()
-const {listContacts, getContactById, addContact, removeContact, updateContact, updateStatusContact}  = require('../../controllers/index')
+const {listContacts, getContactById, addContact, removeContact, updateContact, updateStatusContact}  = require('../../../controllers/index')
 
 router.get('/', listContacts )
 
