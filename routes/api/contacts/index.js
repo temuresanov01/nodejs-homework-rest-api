@@ -3,17 +3,18 @@ const {schemaCreateContact, schemaMongoId, schemaFavoriteContact} = require('./v
 const {validation, validationParams, validationFavorite} = require('../../../middlewares/validation')
 const router = express.Router()
 const {listContacts, getContactById, addContact, removeContact, updateContact, updateStatusContact}  = require('../../../controllers/index')
+const guard = require('../../../middlewares/guard')
 
-router.get('/', listContacts )
+router.get('/', guard, listContacts )
 
-router.get('/:contactId', validationParams(schemaMongoId), getContactById)
+router.get('/:contactId', guard, validationParams(schemaMongoId), getContactById)
 
-router.post('/', validation(schemaCreateContact), addContact)
+router.post('/', guard, validation(schemaCreateContact), addContact)
 
-router.delete('/:contactId', validationParams(schemaMongoId), removeContact)
+router.delete('/:contactId', guard, validationParams(schemaMongoId), removeContact)
 
-router.put('/:contactId', validationParams(schemaMongoId), validation(schemaCreateContact), updateContact)
+router.put('/:contactId', guard, validationParams(schemaMongoId), validation(schemaCreateContact), updateContact)
 
-router.patch('/:contactId/favorite', validationParams(schemaMongoId), validationFavorite(schemaFavoriteContact), updateStatusContact)
+router.patch('/:contactId/favorite', guard, validationParams(schemaMongoId), validationFavorite(schemaFavoriteContact), updateStatusContact)
 
 module.exports = router
