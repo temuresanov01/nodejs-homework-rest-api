@@ -1,10 +1,23 @@
 const Contacts = require('../../repository/contacts')
 const {CustomError} = require('../../middlewares/error-headler')
+// const res = require('express/lib/response')
 
 class ContactsService {
     async getAll(query, user) {
-        const contacts = await Contacts.listContacts(query, user)
-        return contacts
+        const { limit = 5, skip = 0, sortBy, sortByDesc, filter } = query
+        let sortCriteria = null
+        let select = null
+        if (sortBy) {
+            sortCriteria = { [sortBy]: 1}
+    }
+    if(sortByDesc) {
+        sortCriteria = { [sortByDesc]: -1}
+        }
+        if (filter) {
+            select = filter.split('|').join(' ')
+        }
+        const result = await Contacts.listContacts({ limit, skip, sortCriteria, select }, user)
+        return result
     }
     
     async getById(id, user) {
