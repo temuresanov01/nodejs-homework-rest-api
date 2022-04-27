@@ -1,7 +1,7 @@
-const contactRepository = require('../../repository/contacts')
+const ContactsService = require('../../services/contacts')
 
-const listContacts =  async (req, res, next) => {
-  const contacts = await contactRepository.listContacts()
+const listContacts =  async (req, res) => {
+  const contacts = await ContactsService.getAll(req.query, req.user)
   res.json({ status: 'success', code: 200, payload: {contacts} })
 }
 

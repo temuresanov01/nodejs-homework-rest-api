@@ -1,11 +1,8 @@
-const contactRepository = require('../../repository/contacts')
+const ContactsService = require('../../services/contacts')
 
-const updateContact = async (req, res, next) => {
-   const contacts = await contactRepository.updateContact(req.params.contactId, req.body)
-   if (contacts) {
-     return res.json({ status: 'success', code: 200, payload: {contacts} })
-   }
-   return res.status(404).json({status: 'error', code: 404, message: 'Not found'})
-}
+const updateContact = async (req, res) => {
+   const contacts = await ContactsService.update(req.params.contactId, req.body, req.user)
+        return res.json({ status: 'success', code: 200, payload: {contacts} })
+     }
 
 module.exports = updateContact

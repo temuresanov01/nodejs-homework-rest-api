@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
 const Users = require('../../repository/users')
 const {CustomError} = require('../../middlewares/error-headler')
-// const { User } = require('../../models/users')
 const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 class AuthService {
@@ -14,9 +13,7 @@ class AuthService {
 
         return {
             id: newUser.id,
-            // name: newUser.name,
             email: newUser.email,
-            // role: newUser.role,
         }
     }
     

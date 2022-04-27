@@ -7,7 +7,6 @@ const registration = async (req, res) => {
         status: 'success',
         code: 201,
         data: {...user},
-        // payload: { user },
     })
 }
  

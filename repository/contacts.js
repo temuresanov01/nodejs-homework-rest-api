@@ -1,35 +1,35 @@
 const { Contact } = require('../models/contacts')
 
-const listContacts = async () => {
-  const result = await Contact.find({})
+const listContacts = async (query, user) => {
+  const result = await Contact.find({owner: user.id})
   return result
 }
 
-const getContactById = async (contactId) => {
-  const result = await Contact.findOne({_id: contactId}) // Contact.findById({_id: objId})
+const getContactById = async (contactId, user) => {
+  const result = await Contact.findOne({_id: contactId, owner: user.id}) // Contact.findById({_id: objId})
   return result
 }
 
-const removeContact = async (contactId) => {
-  const result = await Contact.findOneAndRemove({_id: contactId})
+const removeContact = async (contactId, user) => {
+  const result = await Contact.findOneAndRemove({_id: contactId, owner: user.id})
   return result
 }
 
-const addContact = async (body) => {
-  const result = await Contact.create(body) 
+const addContact = async (body, user) => {
+  const result = await Contact.create({...body, owner: user.id}) 
   return result
 }
 
-const updateContact = async (contactId, body) => {
+const updateContact = async (contactId, body, user) => {
   const result = await Contact.findOneAndUpdate(
-      {_id: contactId}, {...body}, {new: true},
+      {_id: contactId, owner: user.id}, {...body}, {new: true},
     )
     return result
 } 
 
-const updateStatusContact = async (contactId, body) => {
+const updateStatusContact = async (contactId, body, user) => {
   const result = await Contact.findOneAndUpdate(
-      {_id: contactId}, {...body}, {new: true},
+      {_id: contactId, owner: user.id}, {...body}, {new: true},
     )
     return result
 }
