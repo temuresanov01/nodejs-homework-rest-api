@@ -1,8 +1,8 @@
 const authServise = require('../../services/auth/index')
 
-const registration = async (req, res) => {
+const signup = async (req, res) => {
     const user = await authServise.create(req.body)
-    console.log('registration ~ user', user)
+    console.log('signup ~ user', user)
     return res.status(201).json({
         status: 'success',
         code: 201,
@@ -24,4 +24,4 @@ const logout = async (req, res) => {
         return res.status(204).json()
 }
 
-module.exports = {registration, login, logout}
+module.exports = {signup, login, logout}
