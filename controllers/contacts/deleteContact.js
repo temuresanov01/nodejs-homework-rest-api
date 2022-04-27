@@ -1,4 +1,4 @@
-const contactRepository = require('../repository/contacts')
+const contactRepository = require('../../repository/contacts')
 
 const removeContact = async (req, res, next) => {
   try {

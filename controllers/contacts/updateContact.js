@@ -1,4 +1,4 @@
-const contactRepository = require('../repository/contacts')
+const contactRepository = require('../../repository/contacts')
 
 const updateContact = async (req, res, next) => {
    const contacts = await contactRepository.updateContact(req.params.contactId, req.body)
