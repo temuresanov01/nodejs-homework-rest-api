@@ -1,4 +1,4 @@
-const authServise = require('../../services/users/index')
+const authServise = require('../../services/auth/index')
 
 const signup = async (req, res,) => {
   const { email } = req.body;

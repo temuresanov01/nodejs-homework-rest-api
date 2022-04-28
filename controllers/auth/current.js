@@ -1,4 +1,4 @@
-const authServise = require('../../services/users/index')
+const authServise = require('../../services/auth/index')
 
 const current = async (req, res,) => {
   const user = await authServise.getUserByToken(req, res,);
