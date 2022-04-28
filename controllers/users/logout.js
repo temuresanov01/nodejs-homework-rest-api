@@ -1,4 +1,4 @@
-const authServise = require('../../services/auth/index')
+const authServise = require('../../services/users/index')
 
 const logout = async (req, res,) => {
   await authServise.setToken(req.user.id, null);
