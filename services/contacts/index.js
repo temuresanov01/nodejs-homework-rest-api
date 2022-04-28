@@ -1,6 +1,5 @@
 const Contacts = require('../../repository/contacts')
 const {CustomError} = require('../../middlewares/error-headler')
-// const res = require('express/lib/response')
 
 class ContactsService {
     async getAll(query, user) {

@@ -8,7 +8,7 @@ const guard = async (req, res, next) => {
         return res.status(401).send({
             status: 'error',
             code: 401,
-            message: 'неверный токен',
+            message: 'Not authorized',
         })
     }
     console.log(jwt.verify(token, SECRET_KEY))
@@ -19,7 +19,7 @@ const guard = async (req, res, next) => {
         return res.status(401).send({
             status: 'error',
             code: 401,
-            message: 'неверный токен',
+            message: 'Not authorized',
         })
     }
     req.user = user

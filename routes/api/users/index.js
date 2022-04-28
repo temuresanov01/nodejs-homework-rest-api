@@ -1,16 +1,14 @@
 const express = require('express')
-const { signup, login, logout, }  = require('../../../controllers/auth')
+const { signup, login, logout, current }  = require('../../../controllers/users')
 const {wrapper:wrapperError } = require('../../../middlewares/error-headler')
 const guard = require('../../../middlewares/guard')
-const {emailAndPasswordValidation, updateSubscriptionValidation, userIdParamValidation} = require('../../../middlewares/users')
-
 const router = express.Router()
+const validateCreateUser = require('./validation')
 
-router.post('/signup', emailAndPasswordValidation, wrapperError(signup))
-router.post('/login', emailAndPasswordValidation, wrapperError(login))
+router.post('/signup', validateCreateUser, wrapperError(signup))
+router.post('/login', validateCreateUser, wrapperError(login))
 router.post('/logout', guard, wrapperError(logout))
-router.patch('/:userId',)
-router.get('/current',)
+router.get('/current', guard, current)
 
 
 module.exports = router
