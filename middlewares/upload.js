@@ -3,15 +3,15 @@ const multer = require('multer');
 // const UPLOAD_DIR = process.env.UPLOAD_DIR;
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, UPLOAD_DIR);
+  destination: (req, file, cb) => {
+    cb(null, process.env.UPLOAD_FOLDER);
   },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now().toString()}_${file.originalname}`);
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-const upload = multer({
+const upload = multer({ 
   storage: storage,
   limits: { fileSize: 500000 },
   fileFilter: (req, file, cb) => {

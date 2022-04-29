@@ -5,7 +5,7 @@ const upload = require('../../../middlewares/upload')
 const {wrapper:wrapperError } = require('../../../middlewares/error-headler')
 const router = express.Router()
 
-router.patch('/avatar', guard, upload.single(avatar), wrapperError(avatar))
+router.patch('/avatar', guard, upload.single('avatar'), wrapperError(avatar))
 
 
 module.exports = router
