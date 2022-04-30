@@ -1,7 +1,5 @@
 const multer = require('multer');
 
-// const UPLOAD_DIR = process.env.UPLOAD_DIR;
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, process.env.UPLOAD_FOLDER);
