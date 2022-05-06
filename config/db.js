@@ -1,28 +1,29 @@
-const mongoose = require('mongoose');
-const uri = process.env.URI_DB
+const mongoose = require("mongoose");
 
-const db = mongoose.connect(uri, { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+const uri = process.env.URI_DB;
 
-mongoose.connection.on('connected', () => {
-    console.log('Connected to DB')
-})
+const db = mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-mongoose.connection.on('error', (err) => {
-    console.log(`Mongoose connection error: ${err}`)
-})
+mongoose.connection.on("connected", () => {
+  console.log("Connected to DB");
+});
 
-mongoose.connection.on('disconnected', () => {
-    console.log('Disconnected from DB')
-})
+mongoose.connection.on("error", (err) => {
+  console.log(`Mongoose connection error: ${err}`);
+});
 
-process.on('SIGINT', async() => {
-    mongoose.connection.close(() => {
-      console.log('Disconnected from DB')
-      process.exit(1)
-    })
-})
+mongoose.connection.on("disconnected", () => {
+  console.log("Disconnected from DB");
+});
 
-module.exports = db
+process.on("SIGINT", async () => {
+  mongoose.connection.close(() => {
+    console.log("Disconnected from DB");
+    process.exit(1);
+  });
+});
+
+module.exports = db;

@@ -1,8 +1,20 @@
-const ContactsService = require('../../services/contacts')
+// const contactMethod = require("../../repository/index");
+// const { updateContact } = contactMethod.updateContact;
 
-const updateContact = async (req, res) => {
-   const contacts = await ContactsService.update(req.params.contactId, req.body, req.user)
-        return res.json({ status: 'success', code: 200, payload: {contacts} })
-     }
+const ContactsService = require("../../services/contacts/contacts");
 
-module.exports = updateContact
+const putUpdateContact = async (req, res) => {
+  const contact = await ContactsService.update(
+    req.params.contactId,
+    req.body,
+    req.user
+  );
+
+  return res
+    .status(201)
+    .json({ status: "success", code: 201, payload: { contact } });
+};
+
+module.exports = {
+  putUpdateContact,
+};
