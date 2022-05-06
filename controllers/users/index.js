@@ -1,13 +1,17 @@
-const { AvatarStorage, LocalStorage, CloudStorage  } = require('../../services/file-storage/index')
+const { HTTP_STATUS_CODE } = require("../../libs/constant");
+const AvatarService = require("../../services/avatar");
+// const LocalStorage = require("../../services/avatar/local-storage");
+const CloudStorage = require("../../services/avatar/cloud-storage");
 
 const avatar = async (req, res, next) => {
-    const avatarStorage = new AvatarStorage(LocalStorage, req.file, req.user)
-//  const avatarStorage = new AvatarStorage(CloudStorage, req.file, req.user)
-    const userUrlAvatar = await avatarStorage.updateAvatar()
-    res.status(201)
-    res.json({
-        status: 'success', code: 201, payload: { avatar: userUrlAvatar },
-    })
-}
+  // const avatarService = new AvatarService(LocalStorage, req.file, req.user);
+  const avatarService = new AvatarService(CloudStorage, req.file, req.user);
+  const urlOfAvatar = await avatarService.update();
+  res.json({
+    status: "success",
+    code: HTTP_STATUS_CODE.OK,
+    payload: { avatar: urlOfAvatar },
+  });
+};
 
-module.exports = { avatar }
+module.exports = { avatar };

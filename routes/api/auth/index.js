@@ -1,14 +1,26 @@
-const express = require('express')
-const { signup, login, logout, current }  = require('../../../controllers/auth')
-const {wrapper:wrapperError } = require('../../../middlewares/error-headler')
-const guard = require('../../../middlewares/guard')
-const router = express.Router()
-const validateCreateUser = require('./validation')
+const express = require("express");
 
-router.post('/signup', validateCreateUser, wrapperError(signup))
-router.post('/login', validateCreateUser, wrapperError(login))
-router.post('/logout', guard, wrapperError(logout))
-router.get('/current', guard, current)
+const {
+  registration,
+  login,
+  logout,
+  verifyUser,
+  reverifyEmail,
+} = require("../../../controllers/auth");
+const { wrapper: wrapperError } = require("../../../middleware/error-handler");
+const guard = require("../../../middleware/guard");
+const limiter = require("../../../middleware/rate-limit");
+const router = express.Router();
 
+router.post(
+  "/registration",
+  limiter(15 * 60 * 1000, 2),
+  wrapperError(registration)
+);
+router.post("/login", wrapperError(login));
 
-module.exports = router
+router.get("/verify-email/:token", wrapperError(verifyUser));
+router.post("/verify-email", wrapperError(reverifyEmail));
+
+router.post("/logout", guard, wrapperError(logout));
+module.exports = router;

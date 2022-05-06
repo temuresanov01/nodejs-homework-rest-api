@@ -1,8 +1,12 @@
-const ContactsService = require('../../services/contacts')
+const contactMethod = require("../../repository/index");
+const { getContactById } = contactMethod.getContactById;
 
-const getContactById = async (req, res) => {
-   const contacts = await ContactsService.getById(req.params.contactId, req.user)
-       return res.json({ status: 'success', code: 200, payload: {contacts} })
-}
+const getByIdContact = async (req, res, next) => {
+  const contact = await getContactById(req.params.contactId, req.user);
 
-module.exports = getContactById
+  return res.json({ status: "success", code: 200, payload: { contact } });
+};
+
+module.exports = {
+  getByIdContact,
+};
